@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package ioclose provides utilities for objects implementing or using interface io.Closer.
+// Package ioclose provides utilities for objects implementing or using interface [io.Closer].
 package ioclose
 
-// Closer is the same as io.Closer.
+// Closer is the same as [io.Closer].
 type Closer interface {
 	Close() error
 }
 
-// CloserFunc allows to convert a simple func() error into an io.Closer
+// CloserFunc allows to convert a simple func() error into an [io.Closer].
 type CloserFunc func() error
 
 func (fn CloserFunc) Close() error {
@@ -75,7 +75,7 @@ func (c *Closers) Close() (err error) {
 
 // Close calls all closers in reverse order.
 //
-// After a call to CloseDefered is defered you can still safely Append more closers.
+// After a call to CloseDefered is defered you can still safely [Append] more closers.
 //
 // If *perr is nil, it will contain the result of the first non-nil Close error.
 func (c *Closers) CloseDefered(perr *error) {
