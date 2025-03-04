@@ -17,8 +17,8 @@ limitations under the License.
 // Package ioclose provides utilities for objects implementing or using interface [io.Closer].
 package ioclose
 
-// Closer is the same as [io.Closer].
-type Closer interface {
+// Closer is the same as [io.Closer], but just an alias to an anonymous type.
+type Closer = interface {
 	Close() error
 }
 
@@ -35,9 +35,7 @@ func (fn CloserFunc) Close() error {
 // CloseAll calls the .Close method on each argument and returns the first non-nil error.
 //
 // This helper can be used for example to close multiple prepared statements.
-func CloseAll(closers ...interface {
-	Close() error
-}) (err error) {
+func CloseAll(closers ...Closer) (err error) {
 	for _, c := range closers {
 		if c == nil {
 			continue
@@ -85,9 +83,7 @@ func (c *Closers) CloseDefered(perr *error) {
 	}
 }
 
-func (c *Closers) Append(closers ...interface {
-	Close() error
-}) {
+func (c *Closers) Append(closers ...Closer) {
 	for _, cl := range closers {
 		if cl == nil {
 			continue
