@@ -58,6 +58,10 @@ func ExampleClosers_CloseDefered() {
 	defer all.CloseDefered(&err)
 	all.Append(PrintOnClose("closer1"))
 	all.Append(ErrorOnClose("closer2"))
+
+	// Do not mix other defer statements, for readability
+	defer fmt.Println("defer3")
+
 	all.Append(PrintOnClose("closer3"))
 	all.AppendFunc(func() error {
 		fmt.Println("closer4")
@@ -65,6 +69,7 @@ func ExampleClosers_CloseDefered() {
 	})
 
 	// Output:
+	// defer3
 	// closer4
 	// closer3
 	// closer2
